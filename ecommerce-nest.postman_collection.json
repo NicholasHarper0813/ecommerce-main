@@ -1,0 +1,1314 @@
+{
+	"info": {
+		"_postman_id": "391be3b0-7073-44e6-9bdc-1b8f52072546",
+		"name": "ecommerce-nest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39489590",
+		"_collection_link": "https://deversiti.postman.co/workspace/Team-Workspace~7bedd929-67c4-4add-8f20-240b114b9160/collection/39489590-391be3b0-7073-44e6-9bdc-1b8f52072546?action=share&source=collection_link&creator=39489590"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Save the token in collection variables after login\r",
+									"pm.test(\"Save the token in collection variables after login\", function () {\r",
+									"    var responseData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"token\", responseData.token);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"zeeshan@gmail.com\",\r\n    \"password\": \"pass1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Save the token in collection variables after login\r",
+									"pm.test(\"Save the token in collection variables after login\", function () {\r",
+									"    var responseData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"token\", responseData.token);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Faizan Asif\",\r\n    \"email\": \"faizan@gmail.com\",\r\n    \"password\": \"pass1234\",\r\n    \"role\": \"USER\",\r\n    \"address\": \"780 Green Cap, Gajumatta, Lahore\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbTM5NHpia2IwMDAwNXNxdTh0Z2R3YXB3IiwiZW1haWwiOiJ6ZWVzaGFuQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzMxMDk5MjU3LCJleHAiOjE3MzExODU2NTd9.Nx8IjqWEIos8LOEz3-GhoYGIwC2np2cDeCJmiv6pPLU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories/cm32xe5om0000ri8dm1sbd0dc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories",
+								"cm32xe5om0000ri8dm1sbd0dc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Indian Dresses\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Chinese Dresses\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categories/cm3amodd90001stbwhxmtnb45",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories",
+								"cm3amodd90001stbwhxmtnb45"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories/cm3amodd90001stbwhxmtnb45",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories",
+								"cm3amodd90001stbwhxmtnb45"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subcategories",
+			"item": [
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/subcategories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"subcategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/subcategories/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"subcategories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Traditional\",\r\n    \"categoryId\": \"cm3lw0480000014oan5guu02t\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/subcategories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"subcategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Punjabi Dress\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/subcategories/cm3309h6q0005s717bpogol38",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"subcategories",
+								"cm3309h6q0005s717bpogol38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/subcategories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"subcategories"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/cm37ua3uc00002s000hpta3n8",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"cm37ua3uc00002s000hpta3n8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/C:/Users/zeesh/Downloads/HTML CONVERSION.png"
+								},
+								{
+									"key": "name",
+									"value": "Test Product 2",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "This is random description.",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "25",
+									"type": "text"
+								},
+								{
+									"key": "subCategoryId",
+									"value": "cm3lw0h2m000214oa76fdz670",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reviews",
+			"item": [
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/reviews",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/reviews/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reviews",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"cm37ua3uc00002s000hpta3n8\",\r\n    \"review\": \"this is a random review\",\r\n    \"rating\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/reviews",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/reviews/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reviews",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/reviews/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reviews",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "wishlist",
+			"item": [
+				{
+					"name": "get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/wishlist",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wishlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"cm3andjps0000s2fdc5ilkmmd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/wishlist",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wishlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/wishlist/cm3ane3kj0002s2fdw3z1551x",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wishlist",
+								"cm3ane3kj0002s2fdw3z1551x"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/wishlist/destroy-all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wishlist",
+								"destroy-all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "images",
+			"item": [
+				{
+					"name": "destroy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/images/cm37ua3uh00022s00int23od5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"images",
+								"cm37ua3uh00022s00int23od5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "find-all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbTM5NHpia2IwMDAwNXNxdTh0Z2R3YXB3IiwiZW1haWwiOiJ6ZWVzaGFuQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzMxMDk5MjU3LCJleHAiOjE3MzExODU2NTd9.Nx8IjqWEIos8LOEz3-GhoYGIwC2np2cDeCJmiv6pPLU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Zeeshan Asif\",\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/cm394zbkb00005squ8tgdwapw",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"cm394zbkb00005squ8tgdwapw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-role",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/cm394zbkb00005squ8tgdwapw/role",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"cm394zbkb00005squ8tgdwapw",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/cm394zbkb00005squ8tgdwapw",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"cm394zbkb00005squ8tgdwapw"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart",
+			"item": [
+				{
+					"name": "get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cart",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"cm3lw1kvm000314oal22uyetj\",\r\n    \"quantity\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cart",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-quantity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cart/update-quantity/cm3ivxvgw00024cbdyxa8kmtj",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cart",
+								"update-quantity",
+								"cm3ivxvgw00024cbdyxa8kmtj"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove-item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cart/remove-item/cm3aqrqhc0000ultjix12evo9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cart",
+								"remove-item",
+								"cm3aqrqhc0000ultjix12evo9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cart/clear-cart/cm3aql70x000013jy10i7ylh8",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cart",
+								"clear-cart",
+								"cm3aql70x000013jy10i7ylh8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "get all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders/cm3lw5po8000714oay2q51m4u",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								"cm3lw5po8000714oay2q51m4u"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"DELIVERED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/orders/cm3lw5po8000714oay2q51m4u",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								"cm3lw5po8000714oay2q51m4u"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "notifications",
+			"item": [
+				{
+					"name": "create-event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\": \"It should only go to User\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/notifications/cm3myo1bc0004l3jov5dkvhut",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notifications",
+								"cm3myo1bc0004l3jov5dkvhut"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find-all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/notifications",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

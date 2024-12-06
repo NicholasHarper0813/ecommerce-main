@@ -1,0 +1,184 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Writing schema for Ecommerce app
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  name         String?
+  password     String
+  role         Role           @default(USER)
+  address      String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Cart         Cart?
+  Order        Order[]
+  Review       Review[]
+  Notification Notification[]
+  Wishlist     Wishlist[]
+}
+
+model Category {
+  id            String        @id @default(cuid())
+  name          String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  subCategories SubCategory[]
+}
+
+model SubCategory {
+  id         String    @id @default(cuid())
+  name       String
+  categoryId String
+  products   Product[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  Category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+model Product {
+  id            String         @id @default(cuid())
+  name          String
+  description   String
+  price         Float
+  stock         Int
+  subCategoryId String
+  images        Image[]
+  CartItem      CartItem[]
+  Reviews       Review[]
+  WishlistItem  WishlistItem[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  SubCategory SubCategory @relation(fields: [subCategoryId], references: [id])
+}
+
+model Image {
+  id          String   @id @default(cuid())
+  url         String
+  productId   String?
+  orderItemId String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Product   Product?   @relation(fields: [productId], references: [id])
+  OrderItem OrderItem? @relation(fields: [orderItemId], references: [id])
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  cartItems CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  User User @relation(fields: [userId], references: [id])
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String
+  productId String
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  Product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+enum OrderStatus {
+  PENDING
+  PLACED
+  DISPATCHED
+  CANCELLED
+  DELIVERED
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  userId     String
+  orderItems OrderItem[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  status     OrderStatus @default(PENDING)
+  User       User        @relation(fields: [userId], references: [id])
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  productId   String
+  name        String
+  description String
+  images      Image[]
+  price       Float
+  quantity    Int
+  orderId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  rating    Int
+  review    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User    User    @relation(fields: [userId], references: [id])
+  Product Product @relation(fields: [productId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Wishlist {
+  id        String         @id @default(cuid())
+  userId    String
+  items     WishlistItem[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model WishlistItem {
+  id         String   @id @default(cuid())
+  productId  String   @unique
+  wishlistId String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  Product  Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  Wishlist Wishlist? @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+}
