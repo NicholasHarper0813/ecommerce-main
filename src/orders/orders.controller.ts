@@ -17,13 +17,6 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
-  @Post()
-  @UseGuards(AuthGuard)
-  create(@Req() req: Request) {
-    const user = req.user;
-    return this.ordersService.create(user.sub);
-  }
-
   @Get()
   @UseGuards(AuthGuard)
   findAll(@Req() req: Request) {
@@ -37,6 +30,13 @@ export class OrdersController {
     const user = req.user;
     return this.ordersService.findOne(user.sub, id);
   }
+    
+  @Post()
+  @UseGuards(AuthGuard)
+  create(@Req() req: Request) {
+    const user = req.user;
+    return this.ordersService.create(user.sub);
+  }
 
   @Patch(':id')
   @UseGuards(AuthGuard)
@@ -44,7 +44,8 @@ export class OrdersController {
     @Req() req: Request,
     @Param('id') id: string,
     @Body() updateOrderDto: UpdateOrderDto,
-  ) {
+  ) 
+  {
     const user = req.user;
     return this.ordersService.update(user.sub, id, updateOrderDto);
   }
