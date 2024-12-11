@@ -1,3 +1,10 @@
+import { SubcategoriesService } from './subcategories.service';
+import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
+import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
+import { RolesGuard } from 'src/roles/roles.guard';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { ROLES } from 'src/utils/constants';
+import { Roles } from 'src/roles/roles.decorator';
 import {
   Controller,
   Get,
@@ -8,13 +15,6 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { SubcategoriesService } from './subcategories.service';
-import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
-import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
-import { RolesGuard } from 'src/roles/roles.guard';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { ROLES } from 'src/utils/constants';
-import { Roles } from 'src/roles/roles.decorator';
 
 @Controller('subcategories')
 export class SubcategoriesController {
