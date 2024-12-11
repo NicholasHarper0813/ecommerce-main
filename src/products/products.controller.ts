@@ -1,3 +1,11 @@
+import { ProductsService } from './products.service';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { Roles } from 'src/roles/roles.decorator';
+import { ROLES } from 'src/utils/constants';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RolesGuard } from 'src/roles/roles.guard';
 import {
   Controller,
   Get,
@@ -10,14 +18,6 @@ import {
   UseInterceptors,
   UseGuards,
 } from '@nestjs/common';
-import { ProductsService } from './products.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
-import { FilesInterceptor } from '@nestjs/platform-express';
-import { Roles } from 'src/roles/roles.decorator';
-import { ROLES } from 'src/utils/constants';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { RolesGuard } from 'src/roles/roles.guard';
 
 @Controller('products')
 export class ProductsController {
