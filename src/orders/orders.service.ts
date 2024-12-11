@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
+import { NotificationsService } from 'src/notifications/notifications.service';
 import { DatabaseService } from 'src/database/database.service';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { NotificationsService } from 'src/notifications/notifications.service';
 
 @Injectable()
 export class OrdersService {
