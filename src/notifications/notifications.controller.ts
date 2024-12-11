@@ -1,3 +1,11 @@
+import { NotificationsService } from './notifications.service';
+import { CreateNotificationDto } from './dto/create-notification.dto';
+import { map, Observable } from 'rxjs';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Request } from 'express';
+import { Roles } from 'src/roles/roles.decorator';
+import { ROLES } from 'src/utils/constants';
+import { RolesGuard } from 'src/roles/roles.guard';
 import {
   Controller,
   Post,
@@ -9,14 +17,6 @@ import {
   Get,
   Req,
 } from '@nestjs/common';
-import { NotificationsService } from './notifications.service';
-import { CreateNotificationDto } from './dto/create-notification.dto';
-import { map, Observable } from 'rxjs';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { Request } from 'express';
-import { Roles } from 'src/roles/roles.decorator';
-import { ROLES } from 'src/utils/constants';
-import { RolesGuard } from 'src/roles/roles.guard';
 
 @Controller('notifications')
 export class NotificationsController {
