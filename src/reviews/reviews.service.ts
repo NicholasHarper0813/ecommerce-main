@@ -4,20 +4,28 @@ import { UpdateReviewDto } from './dto/update-review.dto';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
-export class ReviewsService {
+export class ReviewsService 
+{
   constructor(private readonly dbService: DatabaseService) {}
 
-  async create(userId: string, createReviewDto: CreateReviewDto) {
-    try {
+  async create(userId: string, createReviewDto: CreateReviewDto) 
+  {
+    try 
+    {
       const review = await this.dbService.review.create({
-        data: {
-          User: {
-            connect: {
+        data: 
+        {
+          User: 
+          {
+            connect: 
+            {
               id: userId,
             },
           },
-          Product: {
-            connect: {
+          Product: 
+          {
+            connect: 
+            {
               id: createReviewDto.productId,
             },
           },
@@ -26,48 +34,66 @@ export class ReviewsService {
         },
       });
 
-      return {
+      return 
+      {
         data: review,
         message: 'Review created successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(error, 500);
     }
   }
 
-  async findAll() {
-    try {
+  async findAll() 
+  {
+    try 
+    {
       const reviews = await this.dbService.review.findMany();
 
-      if (!reviews.length) {
+      if (!reviews.length) 
+      {
         throw 'No reviews found';
       }
 
-      return {
+      return 
+      {
         data: reviews,
         message: 'Reviews retrieved successfully',
       };
-    } catch (error) {
+    } 
+    catch (error)
+    {
       throw new HttpException(error, 500);
     }
   }
 
-  async findOne(id: string) {
-    try {
+  async findOne(id: string) 
+  {
+    try 
+    {
       const review = await this.dbService.review.findFirstOrThrow({
-        where: {
+        where: 
+        {
           id,
         },
       });
 
-      return {
+      return 
+      {
         data: review,
         message: 'Review retrieved successfully',
       };
-    } catch (error) {
-      if (error?.code === 'P2025') {
+    } 
+    catch (error) 
+    {
+      if (error?.code === 'P2025') 
+      {
         throw new HttpException('Review not found', HttpStatus.NOT_FOUND);
-      } else {
+      } 
+      else 
+      {
         throw new HttpException(
           'Something went wrong',
           HttpStatus.INTERNAL_SERVER_ERROR,
@@ -76,39 +102,52 @@ export class ReviewsService {
     }
   }
 
-  async update(id: string, updateReviewDto: UpdateReviewDto) {
-    try {
+  async update(id: string, updateReviewDto: UpdateReviewDto) 
+  {
+    try 
+    {
       const review = await this.dbService.review.update({
-        where: {
+        where: 
+        {
           id,
         },
-        data: {
+        data: 
+        {
           review: updateReviewDto.review,
           rating: updateReviewDto.rating,
         },
       });
 
-      return {
+      return 
+      {
         data: review,
         message: 'Review updated successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(error, 500);
     }
   }
 
-  async remove(id: string) {
-    try {
+  async remove(id: string) 
+  {
+    try 
+    {
       await this.dbService.review.delete({
-        where: {
+        where: 
+        {
           id,
         },
       });
 
-      return {
+      return
+      {
         message: 'Review deleted successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         error?.meta?.cause || 'Something went wrong',
         HttpStatus.NOT_FOUND,
