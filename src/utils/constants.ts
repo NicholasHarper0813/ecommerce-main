@@ -1,6 +1,7 @@
 export const CLOUDINARY = 'Cloudinary';
 
-export enum ROLES {
+export enum ROLES 
+{
   ADMIN = 'ADMIN',
   USER = 'USER',
 }
