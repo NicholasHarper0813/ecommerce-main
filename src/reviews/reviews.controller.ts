@@ -19,37 +19,43 @@ import { Roles } from 'src/roles/roles.decorator';
 import { ROLES } from 'src/utils/constants';
 
 @Controller('reviews')
-export class ReviewsController {
+export class ReviewsController 
+{
   constructor(private readonly reviewsService: ReviewsService) {}
 
   @Post()
   @UseGuards(AuthGuard)
-  create(@Req() req: Request, @Body() createReviewDto: CreateReviewDto) {
+  create(@Req() req: Request, @Body() createReviewDto: CreateReviewDto) 
+  {
     return this.reviewsService.create(req.user.sub, createReviewDto);
   }
 
   @Get()
-  findAll() {
+  findAll() 
+  {
     return this.reviewsService.findAll();
   }
 
   @Get(':id')
   @UseGuards(AuthGuard)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string) 
+  {
     return this.reviewsService.findOne(id);
   }
 
   @Patch(':id')
   @Roles(ROLES.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
+  update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) 
+  {
     return this.reviewsService.update(id, updateReviewDto);
   }
 
   @Delete(':id')
   @Roles(ROLES.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string) 
+  {
     return this.reviewsService.remove(id);
   }
 }
