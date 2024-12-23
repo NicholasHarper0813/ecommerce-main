@@ -5,7 +5,8 @@ import { DatabaseService } from 'src/database/database.service';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
 @Injectable()
-export class ProductsService {
+export class ProductsService 
+{
   constructor(
     private readonly dbService: DatabaseService,
     private readonly cloudinary: CloudinaryService,
@@ -15,15 +16,15 @@ export class ProductsService {
     createProductDto: CreateProductDto,
     images: Express.Multer.File[],
   ) {
-    try {
-      if (images.length === 0) {
+    try 
+    {
+      if (images.length === 0) 
+      {
         throw new HttpException(
           'At least one image is required',
           HttpStatus.BAD_REQUEST,
         );
       }
-
-      // Validate images
       this.validateImages(images);
 
       const imageUrls = await Promise.all(
@@ -33,68 +34,88 @@ export class ProductsService {
       );
 
       const product = await this.dbService.product.create({
-        data: {
+        data: 
+        {
           name: createProductDto.name,
           description: createProductDto.description,
           price: +createProductDto.price,
           stock: 10,
-          images: {
+          images: 
+          {
             create: imageUrls.map(({ url }) => ({
               url: url,
             })),
           },
-          SubCategory: {
-            connect: {
+          SubCategory: 
+          {
+            connect: 
+            {
               id: createProductDto.subCategoryId,
             },
           },
         },
       });
 
-      return {
+      return 
+      {
         data: product,
         message: 'Product created successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR, {
         cause: error.message,
       });
     }
   }
 
-  async findAll() {
-    try {
+  async findAll() 
+  {
+    try 
+    {
       const products = await this.dbService.product.findMany({
-        include: {
+        include: 
+        {
           images: true,
         },
       });
-      return {
+      return 
+      {
         data: products,
         message: 'Products fetched successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR, {
         cause: error.message,
       });
     }
   }
 
-  async findOne(id: string) {
-    try {
+  async findOne(id: string)
+  {
+    try 
+    {
       const product = await this.dbService.product.findUnique({
-        where: {
+        where: 
+        {
           id: id,
         },
-        include: {
+        include: 
+        {
           images: true,
         },
       });
-      return {
+      return 
+      {
         data: product,
         message: 'Product fetched successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR, {
         cause: error.message,
       });
@@ -105,9 +126,10 @@ export class ProductsService {
     id: string,
     updateProductDto: UpdateProductDto,
     images: Express.Multer.File[],
-  ) {
-    try {
-      // Validate images
+  ) 
+  {
+    try 
+    {
       this.validateImages(images);
 
       const imageUrls = await Promise.all(
@@ -117,14 +139,17 @@ export class ProductsService {
       );
 
       const product = await this.dbService.product.update({
-        where: {
+        where: 
+        {
           id: id,
         },
-        data: {
+        data: 
+        {
           name: updateProductDto.name,
           description: updateProductDto.description,
           price: +updateProductDto.price,
-          images: {
+          images: 
+          {
             create: imageUrls.map(({ url }) => ({
               url: url,
             })),
@@ -132,38 +157,49 @@ export class ProductsService {
         },
       });
 
-      return {
+      return 
+      {
         data: product,
         message: 'Product updated successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR, {
         cause: error.message,
       });
     }
   }
 
-  async remove(id: string) {
-    try {
+  async remove(id: string) 
+  {
+    try 
+    {
       const product = await this.dbService.product.delete({
-        where: {
+        where: 
+        {
           id: id,
         },
       });
-      return {
+      return 
+      {
         data: product,
         message: 'Product deleted successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR, {
         cause: error.message,
       });
     }
   }
 
-  private async validateImages(images: Express.Multer.File[]) {
+  private async validateImages(images: Express.Multer.File[]) 
+  {
     images.forEach((image) => {
-      if (!image.mimetype.includes('image')) {
+      if (!image.mimetype.includes('image')) 
+      {
         throw new HttpException(
           'Only images are allowed',
           HttpStatus.BAD_REQUEST,
