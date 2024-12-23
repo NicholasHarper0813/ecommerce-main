@@ -3,7 +3,8 @@ import { UploadApiErrorResponse, UploadApiResponse, v2 } from 'cloudinary';
 const toStream = require('buffer-to-stream');
 
 @Injectable()
-export class CloudinaryService {
+export class CloudinaryService 
+{
   async uploadImage(
     file: Express.Multer.File,
   ): Promise<UploadApiResponse | UploadApiErrorResponse> {
@@ -17,8 +18,8 @@ export class CloudinaryService {
     });
   }
 
-  // destroy image
-  async destroyImage(publicId: string) {
+  async destroyImage(publicId: string) 
+  {
     return v2.uploader.destroy(publicId);
   }
 }
