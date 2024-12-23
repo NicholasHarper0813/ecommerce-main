@@ -20,7 +20,8 @@ import {
 } from '@nestjs/common';
 
 @Controller('products')
-export class ProductsController {
+export class ProductsController 
+{
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
@@ -30,17 +31,20 @@ export class ProductsController {
   create(
     @UploadedFiles() images: Express.Multer.File[],
     @Body() createProductDto: CreateProductDto,
-  ) {
+  ) 
+  {
     return this.productsService.create(createProductDto, images);
   }
 
   @Get()
-  findAll() {
+  findAll() 
+  {
     return this.productsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string) 
+  {
     return this.productsService.findOne(id);
   }
 
@@ -52,14 +56,16 @@ export class ProductsController {
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
     @UploadedFiles() images: Express.Multer.File[],
-  ) {
+  ) 
+  {
     return this.productsService.update(id, updateProductDto, images);
   }
 
   @Delete(':id')
   @Roles(ROLES.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string) 
+  {
     return this.productsService.remove(id);
   }
 }
