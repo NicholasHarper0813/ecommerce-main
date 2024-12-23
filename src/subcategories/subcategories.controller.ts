@@ -17,23 +17,27 @@ import {
 } from '@nestjs/common';
 
 @Controller('subcategories')
-export class SubcategoriesController {
+export class SubcategoriesController 
+{
   constructor(private readonly subcategoriesService: SubcategoriesService) {}
 
   @Post()
   @Roles(ROLES.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  create(@Body() createSubcategoryDto: CreateSubcategoryDto) {
+  create(@Body() createSubcategoryDto: CreateSubcategoryDto) 
+  {
     return this.subcategoriesService.create(createSubcategoryDto);
   }
 
   @Get()
-  findAll() {
+  findAll() 
+  {
     return this.subcategoriesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string) 
+  {
     return this.subcategoriesService.findOne(id);
   }
 
@@ -43,14 +47,16 @@ export class SubcategoriesController {
   update(
     @Param('id') id: string,
     @Body() updateSubcategoryDto: UpdateSubcategoryDto,
-  ) {
+  ) 
+  {
     return this.subcategoriesService.update(id, updateSubcategoryDto);
   }
 
   @Delete(':id')
   @Roles(ROLES.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string) 
+  {
     return this.subcategoriesService.remove(id);
   }
 }
