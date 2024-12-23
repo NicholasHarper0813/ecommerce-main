@@ -4,34 +4,41 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
-export class CategoriesService {
+export class CategoriesService 
+{
   constructor(private readonly dbService: DatabaseService) {}
 
-  async create(createCategoryDto: CreateCategoryDto) {
+  async create(createCategoryDto: CreateCategoryDto) 
+  {
     const newCategory = await this.dbService.category.create({
       data: createCategoryDto,
     });
-    return {
+    return 
+    {
       data: newCategory,
       message: 'Category created successfully',
     };
   }
 
-  async findAll() {
+  async findAll() 
+  {
     const categories = await this.dbService.category.findMany({
       include: { subCategories: true },
     });
-    return {
+    return 
+    {
       data: categories,
       message: 'Categories retrieved successfully',
     };
   }
 
-  async findOne(id: string) {
+  async findOne(id: string) 
+  {
     const category = await this.dbService.category.findUnique({
       where: { id },
     });
-    if (!category) {
+    if (!category) 
+    {
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
@@ -40,14 +47,17 @@ export class CategoriesService {
         HttpStatus.NOT_FOUND,
       );
     }
-    return {
+    return 
+    {
       data: category,
       message: 'Category retrieved successfully',
     };
   }
 
-  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
-    try {
+  async update(id: string, updateCategoryDto: UpdateCategoryDto) 
+  {
+    try 
+    {
       const updatedCategory = await this.dbService.category.update({
         where: { id },
         data: updateCategoryDto,
@@ -57,7 +67,9 @@ export class CategoriesService {
         error: false,
         message: 'Category updated successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         {
           status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -68,17 +80,22 @@ export class CategoriesService {
     }
   }
 
-  async remove(id: string) {
-    try {
+  async remove(id: string) 
+  {
+    try 
+    {
       await this.dbService.category.delete({
         where: { id },
       });
-      return {
+      return
+      {
         data: null,
         error: false,
         message: 'Category deleted successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         {
           status: HttpStatus.INTERNAL_SERVER_ERROR,
