@@ -6,13 +6,15 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class AuthService {
+export class AuthService 
+{
   constructor(
     private readonly jwtService: JwtService,
     private readonly userService: UsersService,
   ) {}
 
-  async register(data: CreateUserDto) {
+  async register(data: CreateUserDto) 
+  {
     const user = await this.userService.register(data);
     delete user.password;
     return {
@@ -26,17 +28,20 @@ export class AuthService {
     };
   }
   
-  async signIn(loginDto: LoginDto) {
+  async signIn(loginDto: LoginDto) 
+  {
     const user = await this.userService.findOne(loginDto.email);
     const isMatch = await bcrypt.compare(loginDto.password, user.password);
 
-    if (!isMatch) {
+    if (!isMatch) 
+    {
       throw new HttpException('Invalid credentials', 401);
     }
 
-    delete user.password;  // for safety. version 0.1/ nicholas
+    delete user.password;
 
-    return {
+    return 
+    {
       user,
       token: await this.jwtService.signAsync({
         sub: user.id,
