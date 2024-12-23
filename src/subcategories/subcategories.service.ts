@@ -4,20 +4,26 @@ import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
-export class SubcategoriesService {
+export class SubcategoriesService 
+{
   constructor(private readonly dbService: DatabaseService) {}
 
-  async create(createSubcategoryDto: CreateSubcategoryDto) {
-    try {
+  async create(createSubcategoryDto: CreateSubcategoryDto) 
+  {
+    try 
+    {
       const subCategory = await this.dbService.subCategory.create({
         data: createSubcategoryDto,
       });
 
-      return {
+      return 
+      {
         data: subCategory,
         message: 'Subcategory created successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         {
           status: HttpStatus.FORBIDDEN,
@@ -28,15 +34,20 @@ export class SubcategoriesService {
     }
   }
 
-  async findAll() {
-    try {
+  async findAll() 
+  {
+    try 
+    {
       const subCategories = await this.dbService.subCategory.findMany();
 
-      return {
+      return 
+      {
         data: subCategories,
         message: 'Subcategories retrieved successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         {
           status: HttpStatus.FORBIDDEN,
@@ -47,17 +58,22 @@ export class SubcategoriesService {
     }
   }
 
-  async findOne(id: string) {
-    try {
+  async findOne(id: string) 
+  {
+    try 
+    {
       const subCategory = await this.dbService.subCategory.findFirstOrThrow({
         where: { id },
       });
 
-      return {
+      return 
+      {
         data: subCategory,
         message: 'Subcategory retrieved successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         {
           status: HttpStatus.FORBIDDEN,
@@ -68,18 +84,23 @@ export class SubcategoriesService {
     }
   }
 
-  async update(id: string, updateSubcategoryDto: UpdateSubcategoryDto) {
-    try {
+  async update(id: string, updateSubcategoryDto: UpdateSubcategoryDto) 
+  {
+    try 
+    {
       const subCategory = await this.dbService.subCategory.update({
         where: { id },
         data: updateSubcategoryDto,
       });
 
-      return {
+      return 
+      {
         data: subCategory,
         message: 'Subcategory updated successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         {
           status: HttpStatus.FORBIDDEN,
@@ -90,17 +111,22 @@ export class SubcategoriesService {
     }
   }
 
-  async remove(id: string) {
-    try {
+  async remove(id: string) 
+  {
+    try 
+    {
       const subCategory = await this.dbService.subCategory.delete({
         where: { id },
       });
 
-      return {
+      return 
+      {
         data: subCategory,
         message: 'Subcategory deleted successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         {
           status: HttpStatus.FORBIDDEN,
