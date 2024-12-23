@@ -4,28 +4,40 @@ import { UpdateCartDto } from './dto/update-cart.dto';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
-export class CartService {
+export class CartService 
+{
   constructor(private readonly dbService: DatabaseService) {}
 
-  async create(userId: string, createCartDto: CreateCartDto) {
-    try {
+  async create(userId: string, createCartDto: CreateCartDto) 
+  {
+    try 
+    {
       const cart = await this.dbService.cart.findFirst({
-        where: {
+        where:
+        {
           userId,
         },
       });
-      if (!cart) {
+      if (!cart) 
+      {
         await this.dbService.cart.create({
-          data: {
-            User: {
-              connect: {
+          data: 
+          {
+            User: 
+            {
+              connect: 
+              {
                 id: userId,
               },
             },
-            cartItems: {
-              create: {
-                Product: {
-                  connect: {
+            cartItems: 
+            {
+              create: 
+              {
+                Product: 
+                {
+                  connect: 
+                  {
                     id: createCartDto.productId,
                   },
                 },
@@ -34,46 +46,62 @@ export class CartService {
             },
           },
         });
-      } else {
+      } 
+      else 
+      {
         const cartItem = await this.dbService.cartItem.findFirst({
-          where: {
+          where: 
+          {
             cartId: cart.id,
             productId: createCartDto.productId,
           },
         });
-        if (!cartItem) {
+        if (!cartItem) 
+        {
           await this.dbService.cartItem.create({
-            data: {
-              Cart: {
-                connect: {
+            data: 
+            {
+              Cart: 
+              {
+                connect: 
+                {
                   id: cart.id,
                 },
               },
-              Product: {
-                connect: {
+              Product: 
+              {
+                connect: 
+                {
                   id: createCartDto.productId,
                 },
               },
               quantity: createCartDto.quantity,
             },
           });
-        } else {
+        } 
+        else 
+        {
           await this.dbService.cartItem.update({
-            where: {
+            where: 
+            {
               id: cartItem.id,
             },
-            data: {
+            data: 
+            {
               quantity: cartItem.quantity + createCartDto.quantity,
             },
           });
         }
       }
 
-      return {
+      return 
+      {
         data: null,
         message: 'Product added to cart successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       console.log(error);
       throw new HttpException(
         error?.meta?.cause || 'Something went wrong',
@@ -82,25 +110,35 @@ export class CartService {
     }
   }
 
-  async findCart(userId: string) {
-    try {
+  async findCart(userId: string) 
+  {
+    try 
+    {
       const cart = await this.dbService.cart.findFirst({
-        where: {
+        where: 
+        {
           userId,
         },
-        select: {
+        select: 
+        {
           id: true,
-          cartItems: {
-            select: {
+          cartItems: 
+          {
+            select: 
+            {
               id: true,
               quantity: true,
-              Product: {
-                select: {
+              Product: 
+              {
+                select: 
+                {
                   id: true,
                   name: true,
                   price: true,
-                  images: {
-                    select: {
+                  images: 
+                  {
+                    select: 
+                    {
                       url: true,
                     },
                   },
@@ -110,11 +148,14 @@ export class CartService {
           },
         },
       });
-      return {
+      return 
+      {
         data: cart,
         message: 'Cart fetched successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         error?.meta?.cause || 'Something went wrong',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -122,21 +163,27 @@ export class CartService {
     }
   }
 
-  async updateQuantity(id: string, updateCartDto: UpdateCartDto) {
-    try {
+  async updateQuantity(id: string, updateCartDto: UpdateCartDto) 
+  {
+    try 
+    {
       await this.dbService.cartItem.update({
         where: {
           id,
         },
-        data: {
+        data: 
+        {
           quantity: updateCartDto.quantity,
         },
       });
-      return {
+      return 
+      {
         data: null,
         message: 'Cart updated successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         error?.meta?.cause || 'Something went wrong',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -144,18 +191,24 @@ export class CartService {
     }
   }
 
-  async removeCartItem(id: string) {
-    try {
+  async removeCartItem(id: string) 
+  {
+    try 
+    {
       await this.dbService.cartItem.delete({
-        where: {
+        where: 
+        {
           id,
         },
       });
-      return {
+      return 
+      {
         data: null,
         message: 'Cart item removed successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         error?.meta?.cause || 'Something went wrong',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -163,18 +216,24 @@ export class CartService {
     }
   }
 
-  async destroyCart(id: string) {
-    try {
+  async destroyCart(id: string) 
+  {
+    try 
+    {
       await this.dbService.cart.delete({
-        where: {
+        where: 
+        {
           id,
         },
       });
-      return {
+      return 
+      {
         data: null,
         message: 'All cart items removed successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(
         error?.meta?.cause || 'Something went wrong',
         HttpStatus.INTERNAL_SERVER_ERROR,
