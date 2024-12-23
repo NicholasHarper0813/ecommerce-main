@@ -37,7 +37,8 @@ export class NotificationsController {
   create(
     @Param('userId') userId: string,
     @Body() createNotificationDto: CreateNotificationDto,
-  ) {
+  ) 
+  {
     return this.notificationsService.sendNotificationToUser(
       userId,
       createNotificationDto,
@@ -46,7 +47,8 @@ export class NotificationsController {
 
   @Get()
   @UseGuards(AuthGuard)
-  findAll(@Req() req: Request) {
+  findAll(@Req() req: Request) 
+  {
     const { sub } = req.user;
     return this.notificationsService.findAll(sub);
   }
