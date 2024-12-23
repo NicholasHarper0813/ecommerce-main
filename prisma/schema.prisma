@@ -1,26 +1,22 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-generator client {
+generator client 
+{
   provider = "prisma-client-js"
 }
 
-datasource db {
+datasource db 
+{
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// Writing schema for Ecommerce app
-
-enum Role {
+enum Role 
+{
   ADMIN
   USER
 }
 
-model User {
+model User 
+{
   id           String         @id @default(cuid())
   email        String         @unique
   name         String?
@@ -36,7 +32,8 @@ model User {
   Wishlist     Wishlist[]
 }
 
-model Category {
+model Category 
+{
   id            String        @id @default(cuid())
   name          String
   createdAt     DateTime      @default(now())
@@ -44,7 +41,8 @@ model Category {
   subCategories SubCategory[]
 }
 
-model SubCategory {
+model SubCategory 
+{
   id         String    @id @default(cuid())
   name       String
   categoryId String
@@ -55,7 +53,8 @@ model SubCategory {
   Category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
-model Product {
+model Product 
+{
   id            String         @id @default(cuid())
   name          String
   description   String
@@ -72,7 +71,8 @@ model Product {
   SubCategory SubCategory @relation(fields: [subCategoryId], references: [id])
 }
 
-model Image {
+model Image 
+{
   id          String   @id @default(cuid())
   url         String
   productId   String?
@@ -84,7 +84,8 @@ model Image {
   OrderItem OrderItem? @relation(fields: [orderItemId], references: [id])
 }
 
-model Cart {
+model Cart 
+{
   id        String     @id @default(cuid())
   userId    String     @unique
   cartItems CartItem[]
@@ -94,7 +95,8 @@ model Cart {
   User User @relation(fields: [userId], references: [id])
 }
 
-model CartItem {
+model CartItem 
+{
   id        String   @id @default(cuid())
   cartId    String
   productId String
@@ -106,7 +108,8 @@ model CartItem {
   Product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
-enum OrderStatus {
+enum OrderStatus 
+{
   PENDING
   PLACED
   DISPATCHED
@@ -114,7 +117,8 @@ enum OrderStatus {
   DELIVERED
 }
 
-model Order {
+model Order 
+{
   id         String      @id @default(cuid())
   userId     String
   orderItems OrderItem[]
@@ -124,7 +128,8 @@ model Order {
   User       User        @relation(fields: [userId], references: [id])
 }
 
-model OrderItem {
+model OrderItem 
+{
   id          String   @id @default(cuid())
   productId   String
   name        String
@@ -139,7 +144,8 @@ model OrderItem {
   Order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
-model Review {
+model Review 
+{
   id        String   @id @default(cuid())
   userId    String
   productId String
@@ -152,7 +158,8 @@ model Review {
   Product Product @relation(fields: [productId], references: [id])
 }
 
-model Notification {
+model Notification 
+{
   id        String   @id @default(cuid())
   userId    String
   message   String
@@ -162,7 +169,8 @@ model Notification {
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Wishlist {
+model Wishlist 
+{
   id        String         @id @default(cuid())
   userId    String
   items     WishlistItem[]
@@ -172,7 +180,8 @@ model Wishlist {
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model WishlistItem {
+model WishlistItem 
+{
   id         String   @id @default(cuid())
   productId  String   @unique
   wishlistId String?
