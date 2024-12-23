@@ -19,11 +19,13 @@ import {
 } from '@nestjs/common';
 
 @Controller('notifications')
-export class NotificationsController {
+export class NotificationsController 
+{
   constructor(private readonly notificationsService: NotificationsService) {}
 
   @Sse('events/:userId')
-  sendEvents(@Param('userId') userId: string): Observable<MessageEvent> {
+  sendEvents(@Param('userId') userId: string): Observable<MessageEvent> 
+  {
     return this.notificationsService.getUserNotifications(userId).pipe(
       map((notification) => ({
         data: notification,
