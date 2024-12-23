@@ -6,13 +6,15 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { RolesGuard } from 'src/roles/roles.guard';
 
 @Controller('images')
-export class ImagesController {
+export class ImagesController 
+{
   constructor(private readonly imagesService: ImagesService) {}
 
   @Delete(':id')
   @Roles(ROLES.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string) 
+  {
     return this.imagesService.remove(id);
   }
 }
