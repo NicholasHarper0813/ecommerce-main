@@ -4,39 +4,52 @@ import { DatabaseService } from 'src/database/database.service';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
 @Injectable()
-export class OrdersService {
+export class OrdersService 
+{
   constructor(
     private readonly dbService: DatabaseService,
     private readonly notificationsService: NotificationsService,
   ) {}
 
-  async create(userId: string) {
-    try {
+  async create(userId: string) 
+  {
+    try 
+    {
       const userCart = await this.dbService.cart.findFirst({
-        where: {
+        where: 
+        {
           userId,
         },
-        include: {
-          cartItems: {
-            include: {
+        include: 
+        {
+          cartItems: 
+          {
+            include: 
+            {
               Product: true,
             },
           },
         },
       });
-      if (!userCart) {
+      if (!userCart) 
+      {
         throw 'Cart not found. Please add items to your cart to place order.';
       }
 
       const order = await this.dbService.order.create({
-        data: {
-          User: {
-            connect: {
+        data: 
+        {
+          User: 
+          {
+            connect: 
+            {
               id: userId,
             },
           },
-          orderItems: {
-            createMany: {
+          orderItems: 
+          {
+            createMany: 
+            {
               data: userCart.cartItems.map((_item) => ({
                 productId: _item.Product.id,
                 name: _item.Product.name,
@@ -51,7 +64,8 @@ export class OrdersService {
       });
 
       await this.dbService.cart.deleteMany({
-        where: {
+        where: 
+        {
           userId,
         },
       });
@@ -60,45 +74,61 @@ export class OrdersService {
         message: `Order ${order.id} placed successfully`,
       });
 
-      return {
+      return 
+      {
         data: order,
         message: 'Order successfully placed',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(error, 500);
     }
   }
 
-  async findAll(userId: string) {
-    try {
+  async findAll(userId: string) 
+  {
+    try 
+    {
       const orders = await this.dbService.order.findMany({
-        where: {
+        where: 
+        {
           userId: userId,
         },
       });
 
-      return {
+      return 
+      {
         data: orders,
         message: 'Orders retrieved successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(error, 500);
     }
   }
 
-  async findOne(userId: string, orderId: string) {
-    try {
+  async findOne(userId: string, orderId: string) 
+  {
+    try
+    {
       const order = await this.dbService.order.findFirstOrThrow({
-        where: {
-          AND: {
+        where: 
+        {
+          AND: 
+          {
             userId,
             id: orderId,
           },
         },
-        include: {
+        include: 
+        {
           orderItems: true,
-          User: {
-            select: {
+          User: 
+          {
+            select: 
+            {
               id: true,
               name: true,
               email: true,
@@ -112,24 +142,31 @@ export class OrdersService {
         return total + _item.price * _item.quantity;
       }, 0);
 
-      return {
+      return 
+      {
         data: order,
         subtotal,
         message: 'Order retrieved successfully',
       };
-    } catch (error) {
+    } 
+    catch (error)
+    {
       throw new HttpException(error, 500);
     }
   }
 
-  async update(userId: string, id: string, updateOrderDto: UpdateOrderDto) {
-    try {
+  async update(userId: string, id: string, updateOrderDto: UpdateOrderDto) 
+  {
+    try 
+    {
       const order = await this.dbService.order.update({
-        where: {
+        where: 
+        {
           id: id,
           userId: userId,
         },
-        data: {
+        data: 
+        {
           status: updateOrderDto.status,
         },
       });
@@ -138,11 +175,14 @@ export class OrdersService {
         message: `Order ${order.id} status updated to ${order.status}`,
       });
 
-      return {
+      return 
+      {
         data: order,
         message: 'Order updated successfully',
       };
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       throw new HttpException(error, 500);
     }
   }
