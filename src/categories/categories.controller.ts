@@ -17,23 +17,27 @@ import { ROLES } from 'src/utils/constants';
 import { RolesGuard } from 'src/roles/roles.guard';
 
 @Controller('categories')
-export class CategoriesController {
+export class CategoriesController 
+{
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
   @Roles(ROLES.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  create(@Body() createCategoryDto: CreateCategoryDto) {
+  create(@Body() createCategoryDto: CreateCategoryDto) 
+  {
     return this.categoriesService.create(createCategoryDto);
   }
 
   @Get()
-  findAll() {
+  findAll() 
+  {
     return this.categoriesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string) 
+  {
     return this.categoriesService.findOne(id);
   }
 
@@ -43,14 +47,16 @@ export class CategoriesController {
   update(
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
-  ) {
+  ) 
+  {
     return this.categoriesService.update(id, updateCategoryDto);
   }
 
   @Delete(':id')
   @Roles(ROLES.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string) 
+  {
     return this.categoriesService.remove(id);
   }
 }
